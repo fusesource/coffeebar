@@ -3,7 +3,7 @@
 CoffeeBar is a CoffeScript based Web Framework for Rapid Application Development of the UI and it 
 communicates using REST JSON services implemented in Java via JAXRS.  It assembles 
 together bunch of awesome tools such as: 
-[CoffeeScript](CoffeScript based Web Framework for Rapid Application Development.), 
+[CoffeeScript](http://jashkenas.github.com/coffee-script/), 
 [Backbone.js](http://documentcloud.github.com/backbone/), 
 [Underscore.js](http://documentcloud.github.com/underscore/), 
 [CoffeeJade](https://github.com/fusesource/coffeejade),
