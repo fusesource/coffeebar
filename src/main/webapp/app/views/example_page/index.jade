@@ -1,0 +1,14 @@
+.container
+  section#broker
+    .row
+      .span16.columns
+        .page-header
+          h1 Name: #{name}
+    .row
+      .span8.columns
+        h2 Address:
+        ul
+        - for line in address
+          li #{line}
+      .span8.columns
+        h2 Time: #{time}

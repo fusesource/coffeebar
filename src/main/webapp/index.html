@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fabric Console</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css"></link>
+
+    <!--[if !IE]> -->
+      <script src="app/frameworks/require.js"></script>
+      <script>
+        require.config({ baseUrl: "app" });
+        require(["main"]);
+      </script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+      <script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+      <style>
+        #chrome_frame_install {
+          position: static;
+          margin: 2em 0px 0px 0px;
+          height: 60em;
+        }
+        .chromeFrameInstallDefaultStyle {
+          width: 100%;
+        }
+      </style>
+      <script>
+        window.attachEvent("onload", function() {
+          CFInstall.check({
+            node: "chrome_frame_install",
+            cssText: "background:blue;",
+            destination: "#/agents"
+          });
+        }); 
+      </script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <h3>
+            <a class="logo" href="#/agents">
+              <span>CoffeeBar</span>
+            </a>
+          </h3>
+          <div id="topbar_nav_container">
+          </div>
+          <div id="topbar_user_container">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="flash_container">
+    </div>
+
+    <div id="page_container">
+      <div class="container" id="loading">
+        <section>
+          <div class="row" >
+            <!--[if !IE]> -->
+            <div class="span8 columns offset4">
+              <script type="text/javascript">
+                document.write("<center><img src='img/ajax-loader.gif'></center>")
+              </script>
+              <noscript>
+                <h2>JavaScript Not Enabled</h2>
+                <strong>Sorry</strong>, but this application requires a browser with JavaScript enabled!
+              </noscript>
+            </div>
+            <!-- <![endif]-->
+            <!--[if IE]>
+            <div class="span16 columns">
+              <h2>Chrome Frame Required</h2>
+              <div id="chrome_frame_install">
+              </div>
+            </div>
+            <![endif]-->
+          </div>
+        </section>
+      </div>
+    </div>
+    <div id="dialog_container">
+    </div>
+      
+  </body>
+</html>

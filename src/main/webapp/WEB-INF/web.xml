@@ -1,0 +1,67 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <display-name>CoffeeBar Example</display-name>
+
+    <filter>
+      <filter-name>Jersey Filter</filter-name>
+      <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
+
+      <init-param>
+        <param-name>com.sun.jersey.config.feature.Trace</param-name>
+        <param-value>false</param-value>
+      </init-param>
+      <init-param>
+        <param-name>com.sun.jersey.config.feature.Redirect</param-name>
+        <param-value>true</param-value>
+      </init-param>
+      <init-param>
+          <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+          <param-value>
+              org.fusesource.coffeebar.HiddenHttpMethodFilter
+              org.fusesource.coffeebar.auth.AuthenticationFilter
+              <!--com.sun.jersey.api.container.filter.LoggingFilter-->
+          </param-value>
+      </init-param>
+<!--      <init-param>
+          <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+          <param-value>com.sun.jersey.api.container.filter.LoggingFilter</param-value>
+      </init-param>
+      <init-param>-->
+      <init-param>
+        <param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>
+        <param-value>com.sun.jersey.api.core.ClassNamesResourceConfig</param-value>
+      </init-param>
+      <init-param>
+        <param-name>com.sun.jersey.config.property.MediaTypeMappings</param-name>
+        <param-value>json : application/json</param-value>
+      </init-param>
+      <init-param>
+          <param-name>com.sun.jersey.config.property.classnames</param-name>
+          <param-value>
+            org.fusesource.coffeebar.InputStreamProvider
+            org.fusesource.coffeebar.JsonProvider
+            org.fusesource.coffeebar.auth.AuthenticationResource
+            org.fusesource.coffeebar.Example
+          </param-value>
+      </init-param>
+
+      <init-param>
+        <param-name>com.sun.jersey.config.feature.FilterForwardOn404</param-name>
+        <param-value>true</param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>Jersey Filter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+      <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
+
