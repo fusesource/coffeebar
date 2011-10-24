@@ -415,6 +415,7 @@
                 <jj>JAVADOC_STYLE</jj>
                 <index>SCRIPT_STYLE</index>
                 <jade>HAML_STYLE</jade>
+                <coffee>SCRIPT_STYLE</coffee>
               </mapping>
             </configuration>
             <executions>
