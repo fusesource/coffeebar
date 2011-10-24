@@ -18,6 +18,7 @@ and [Require.js](http://requirejs.org/).
 * [npm](http://npmjs.org/)
 * [coffeejade](https://github.com/fusesource/coffeejade), basically just run:
 
+
     git clone https://github.com/fusesource/coffeejade
     sudo npm install -g coffeejade
 
