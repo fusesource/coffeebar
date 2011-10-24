@@ -16,8 +16,9 @@ and [Require.js](http://requirejs.org/).
 * [Rake](http://rake.rubyforge.org/) - aka `gem install rake`
 * [node](http://nodejs.org/) - aka `brew install node`
 * [npm](http://npmjs.org/)
-* [coffeejade](https://github.com/fusesource/coffeejade), basically just run:
+* [coffeejade](https://github.com/fusesource/coffeejade)
 
+coffeejade is installed by running: 
 
     git clone https://github.com/fusesource/coffeejade
     sudo npm install -g coffeejade
