@@ -81,6 +81,7 @@
     <jetty-plugin-version>7.4.5.v20110725</jetty-plugin-version>
     <jetty-version>7.4.5.v20110725</jetty-version>
     
+    <webapp-outdir>${basedir}/target/webapp</webapp-outdir>
   </properties>
 
   <dependencies>
@@ -247,7 +248,7 @@
           <classpathScope>test</classpathScope>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -255,88 +256,99 @@
         <configuration>
           <webAppConfig>
             <contextPath>/</contextPath>
-            <resourceBase>${basedir}/target/webapp</resourceBase>
+            <resourceBase>${webapp-outdir}</resourceBase>
           </webAppConfig>
           <systemProperties>
             <systemProperty>
               <name>com.sun.management.jmxremote</name>
-              <value/>
+              <value />
             </systemProperty>
           </systemProperties>
           <scanIntervalSeconds>1</scanIntervalSeconds>
         </configuration>
-        
-        <dependencies>
-          <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api-version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
-      
+
       <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.6</version>
+        <groupId>org.fusesource.coffeebar</groupId>
+        <artifactId>brew</artifactId>
+        <version>0.2.11</version>
         <executions>
           <execution>
-            <phase>generate-resources</phase>
+            <id>compile</id>
+            <phase>process-classes</phase>
             <goals>
-              <goal>run</goal>
+              <goal>compile</goal>
             </goals>
-            <configuration>
-              <target>
-                <exec executable="rake"/>
-                <mkdir dir="${basedir}/target/webapp-min"/>
-                <copy todir="${basedir}/target/webapp-min">
-                  <fileset dir="${basedir}/target/webapp">
-                    <include name="*.html"/>
-                    <include name="img/**"/>
-                    <include name="*.json"/>
-                    <include name="**/*.json"/>
-                    <include name="app/frameworks/require.js"/>
-                    <include name="WEB-INF/**/*"/>
-                  </fileset>
-                </copy>
-                <!-- optimize the java script -->
-                <java classpathref="maven.plugin.classpath" fork="true" dir="${basedir}/target" classname="org.mozilla.javascript.tools.shell.Main">
-                  <arg value="${basedir}/src/main/tools/r.js"/>
-                  <arg value="-o"/>
-                  <arg value="baseUrl=${basedir}/target/webapp/app"/>
-                  <arg value="name=main"/>
-                  <arg value="optimize=closure"/>
-                  <arg value="out=${basedir}/target/webapp-min/app/main.js"/>
-                </java>
-                <!-- optimize the css -->
-                <java classpathref="maven.plugin.classpath" fork="true" dir="${basedir}/target" classname="org.mozilla.javascript.tools.shell.Main">
-                  <arg value="${basedir}/src/main/tools/r.js"/>
-                  <arg value="-o"/>
-                  <arg value="cssIn=${basedir}/target/webapp/styles/main.css"/>
-                  <arg value="out=${basedir}/target/webapp-min/styles/main.css"/>
-                </java>
-              </target>
-            </configuration>
+          </execution>
+          <execution>
+            <id>optimize</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>optimize</goal>
+            </goals>
           </execution>
         </executions>
+        <configuration>
+          <coffeeSourceDir>${basedir}/src/main/webapp</coffeeSourceDir>
+          <coffeeOutputDir>${webapp-outdir}</coffeeOutputDir>
+
+          <hamlSourceDir>${basedir}/src/main/webapp/app/views</hamlSourceDir>
+          <hamlOutputDir>${webapp-outdir}/app/views</hamlOutputDir>
+
+          <jadeSourceDir>${basedir}/src/main/webapp/app/views</jadeSourceDir>
+          <jadeOutputDir>${webapp-outdir}/app/views</jadeOutputDir>
+
+          <resourceSourceDir>${basedir}/src/main/webapp</resourceSourceDir>
+          <resourceOutputDir>${webapp-outdir}</resourceOutputDir>
+
+          <viewsMapOutputFile>${webapp-outdir}/app/views/jade.js</viewsMapOutputFile>
+
+          <optimizeSourceDir>${webapp-outdir}/app</optimizeSourceDir>
+          <optimizeBuildDir>${project.build.directory}/tmp</optimizeBuildDir>
+          <optimizeOutputDir>${webapp-outdir}/app</optimizeOutputDir>
+
+          <optimizedFileNameSuffix>false</optimizedFileNameSuffix>
+          <cssOptimizer>standard.keepLines</cssOptimizer>
+          <jsOptimizer>closure.keepLines</jsOptimizer>
+        </configuration>
         <dependencies>
-          <dependency>
-            <groupId>rhino</groupId>
-            <artifactId>js</artifactId>
-            <version>1.7R2</version>
-          </dependency>
           <dependency>
             <groupId>com.google.javascript</groupId>
             <artifactId>closure-compiler</artifactId>
             <version>r1352</version>
           </dependency>
+          <dependency>
+            <groupId>args4j</groupId>
+            <artifactId>args4j</artifactId>
+            <version>2.0.12</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r09</version>
+          </dependency>
+          <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.4.1</version>
+          </dependency>
         </dependencies>
+
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.1.1</version>
         <configuration>
-          <warSourceDirectory>${basedir}/target/webapp-min</warSourceDirectory>
+          <warSourceDirectory>${webapp-outdir}</warSourceDirectory>
+          <packagingExcludes>
+            app/controllers/**/*.js,
+            app/frameworks/**/*.js,
+            app/models/**/*.js,
+            app/views/**/*.js,
+            app/frameworks.js
+          </packagingExcludes>
         </configuration>
       </plugin>
     </plugins>

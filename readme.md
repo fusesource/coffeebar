@@ -13,15 +13,6 @@ and [Require.js](http://requirejs.org/).
 # Requirements
 
 * [Maven 3](http://maven.apache.org/download.html)
-* [Rake](http://rake.rubyforge.org/) - aka `gem install rake`
-* [node](http://nodejs.org/) - aka `brew install node`
-* [npm](http://npmjs.org/)
-* [coffeejade](https://github.com/fusesource/coffeejade)
-
-coffeejade is installed by running: 
-
-    git clone https://github.com/fusesource/coffeejade
-    sudo npm install -g coffeejade
 
 # Directory Structure
 
@@ -46,11 +37,11 @@ are:
 
 Compile an continue looking for file to 
 
-Start the embedded HTTP server by running `mvn test-compile exec:java` or by
+Start the embedded HTTP server by running `mvn jetty:run` or by
 running the `org.fusesource.coffeebar.HttpServer` class in your IDE.
 
-In another terminal window you should run `rake watch` to scan for changes
-in your .coffee or .jade files and compiles them to java script.
+In another terminal window you should run `mvn brew:compile -Dbrew.watch=true` 
+to scan for changes in your .coffee or .jade files and compile them to java script.
 
 Open you browser to http://127.0.0.1:8080 to view the app.  If you are going
 to be updating the app make sure you use the latest Chrome beta which supports
